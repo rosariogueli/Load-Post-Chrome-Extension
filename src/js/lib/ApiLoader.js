@@ -9,7 +9,8 @@
         // api REST endpoint
         this.apiEndpoint = apiEndpoint;
 
-        // Here we will keep our cache of posts and comments to reduce the number of API calls and server load, inluding for errors!
+        // Here we will keep our cache of posts and comments to reduce 
+        // the number of API calls and server load, inluding for errors!
         this.localPosts = {};
 
         this.onErrorCallback = (errorMsg) => {};
@@ -49,7 +50,7 @@
                 // trigger error callback
                 this.onErrorCallback(this.localPosts[path].error);
             }
-            // for good cached data, throw it as a success!
+            // for good cached data, call it a day!
             else{
                 success(this.localPosts[path]);
             }

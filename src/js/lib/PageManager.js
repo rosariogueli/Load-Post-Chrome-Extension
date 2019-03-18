@@ -6,7 +6,8 @@
 class PageManager{
 
     constructor(){
-        // html template that will be send from the background script (which has loaded it once only and cached for anytime use)
+        // html template that will be sent from the background script 
+        // (which has loaded it once only and cached for anytime use)
         this.post_template = '';
     }
 

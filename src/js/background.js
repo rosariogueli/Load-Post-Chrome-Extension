@@ -19,25 +19,25 @@ apiLoader.onError(error => {
     tabsManager.renderPage({error: error});
 });
 
-// Load the template for our posts and tell the tab about it 
+// Load the template for our posts and tell tabsManager about it 
 // html template file can be loaded here because we've allowed it in the manifest file's web_accessible_resources.
 templateLoader.load('src/html/post-template.html', template_data => {
     tabsManager.setTemplate(template_data);
 });
 
-// wait for popup's order...
+// wait for popup action to fire, get action type and postId and load post and comments from Api or cache!
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     
     if (request.action === 'popup-load-post'){
-        // prepare page to receive data and pass the html template
+        // prepare page to receive data
         tabsManager.preparePage();
         
         // load post information by request.data.postId
         apiLoader.loadUrl(`posts/${request.data.postId}`, post => {
-            // given the post data, show the post inside the current page
+            // given the post data, show the post inside the current page, while below we load our comments too.
             tabsManager.renderPage({post});
 
-            // load post comments and show them in the post
+            // load post comments and show them in the page
             apiLoader.loadUrl(`comments?postId=${post.id}`, comments => {
                 // add comments to page                    
                 tabsManager.renderPage({post, comments});
