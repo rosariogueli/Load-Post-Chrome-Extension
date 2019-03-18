@@ -1,6 +1,11 @@
 # Chrome Extension Open My Post
 > This extension allows a user to enter a Post ID and load the related post and its comments into the current page.
-	
+
+# Table of Contents
+1. [ Features. ](#features)
+2. [ Installation. ](#installation)
+3. [ Usage. ](#usage)
+
 # Features
 - Chrome extension built using es6
 - It's only built for chrome, not firefox, etc.
