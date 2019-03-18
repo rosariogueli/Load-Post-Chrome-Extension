@@ -1,0 +1,30 @@
+{
+    "manifest_version": 2,
+    "name": "Load My Post",
+    "description": "Chrome web extension that presents data in a sensible way.",
+    "author": "Rosario Gueli <rosariogueli@hotmail.it>",
+    "version": "1.0.0",
+    "browser_action": {
+        "default_title": "Click to Load My Post",
+        "default_popup": "src/html/popup.html"
+    },
+    "content_scripts": [ 
+        { 
+            "matches": ["<all_urls>"],
+            "js": [
+                "node_modules/mustache/mustache.min.js",
+                "src/js/content_script.js"
+            ]
+        } 
+    ],
+    "background": {
+        "page": "src/html/background.html"
+    },
+    "permissions": [
+        "<all_urls>"
+    ],
+    "web_accessible_resources": [
+        "node_modules/bootstrap/dist/css/bootstrap.css",
+        "src/js/*"
+    ]
+}

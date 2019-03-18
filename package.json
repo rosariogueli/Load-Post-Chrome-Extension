@@ -1,0 +1,27 @@
+{
+  "name": "chrome-ext-load-post",
+  "version": "1.0.0",
+  "description": "Chrome web extension that presents data in a sensible way.",
+  "main": "index.js",
+  "scripts": {
+    "info": "echo 'Chrome Extension developed by Rosario Gueli.'",
+    "lint": "echo '=> linting' && jshint src/js/*.js",
+    "test": "echo '=> testing' && mocha test/",
+    "pretest": "npm run lint -s"
+  },
+  "author": "Rosario Gueli <rosariogueli@hotmail.it>",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.3.1",
+    "mustache": "^3.0.1",
+    "popper.js": "^1.14.7"
+  },
+  "private": true,
+  "devDependencies": {
+    "jshint": "^2.10.2"
+  },
+  "jshintConfig": {
+    "esversion": 6
+  }
+}

@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="col-md-10 offset-md-1">
+
+    <!-- Post Element -->
+    <div class="jumbotron text-center">
+
+      {{#error}}
+        <h3 class="display-4">Error</h3>
+        <p class="lead">{{error}}</p>
+      {{/error}}
+      {{^error}}
+
+          {{#post}}
+          <h3 class="display-4">{{title}}</h3>
+          <p class="lead">{{body}}</p>
+          {{/post}}
+          {{^post}}
+          <div class="col-12 text-center">
+            <h4>Loading Post...</h4>
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+          {{/post}}
+          
+      {{/error}}
+    </div>
+    <!-- End Post Element -->
+
+    <!-- Comments Element -->
+    {{#post}}
+    <div class="row">
+      {{#comments}}
+      <div class="col-lg-6">
+        <b>{{name}} ({{email}})</b>
+        <p>{{body}}}</p>
+      </div>
+      {{/comments}}
+      {{^comments}}
+      <div class="col-12 text-center">
+        <h4>Loading Comments...</h4>
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      {{/comments}}
+    </div>
+    {{/post}}
+    <!-- End Comments Element -->
+
+  </div>
+</div>
