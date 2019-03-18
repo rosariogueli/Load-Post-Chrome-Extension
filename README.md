@@ -16,9 +16,10 @@
 
 - Please either clone this repository or download as a ZIP file.
 - Extract the contents into your preferred working directory.
+- To install the required dependencies, please access directory and run: npm install 
 - Open your Google Chrome browser.
 - Enter `chrome://extensions/` into the address bar.
 - Ensure "Developer Mode" is ticked/enabled in the top right.
 - Click on "Load unpacked extension...".
 - Navigate to your extracted directory, and click "OK".
-- Your basic extension template should now be alongside your address bar, showing the Google Chrome logo.
+- The installed extension should now be alongside your address bar.
