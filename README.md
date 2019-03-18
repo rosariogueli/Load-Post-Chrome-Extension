@@ -23,3 +23,10 @@
 - Click on "Load unpacked extension...".
 - Navigate to your extracted directory, and click "OK".
 - The installed extension should now be alongside your address bar.
+
+# Usage
+1. After installing this extension, navigate to a web page over the internet. 
+2. Click on the newly installed extension icon on the top right of the address bar.
+3. A small popup comes up, enter a post ID, a number between 1-100 (Above 100 it will result in error)
+4. Click Load Post or just hit ENTER.
+5. The current page has been replaced with a Post and its Comments. 
