@@ -13,7 +13,7 @@
             "matches": ["<all_urls>"],
             "js": [
                 "node_modules/mustache/mustache.min.js",
-                "src/js/content_script.js"
+                "src/js/content.js"
             ]
         } 
     ],

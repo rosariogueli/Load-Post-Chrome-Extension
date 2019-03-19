@@ -6,41 +6,37 @@
  */
 
 import ApiLoader from './lib/ApiLoader.js';
-import TabsManager from './lib/TabsManager.js';
 import TemplateLoader from './lib/TemplateLoader.js';
+import ChromeExtension from './lib/ChromeExtension.js';
 
-const apiLoader = new ApiLoader('https://jsonplaceholder.typicode.com');
-const tabsManager = new TabsManager();
 const templateLoader = new TemplateLoader();
+const apiLoader = new ApiLoader('https://jsonplaceholder.typicode.com');
 
-// when there are any errors...
-apiLoader.onError(error => {
-    // render the error
-    tabsManager.renderPage({error: error});
-});
+// when there are any errors, show them on page.
+apiLoader.onError(error => ChromeExtension.tellTab('bg-render-page', {error}) );
 
-// Load the template for our posts and tell tabsManager about it 
+// Load the template for our posts:
 // html template file can be loaded here because we've allowed it in the manifest file's web_accessible_resources.
+let post_template = '';
 templateLoader.load('src/html/post-template.html', template_data => {
-    tabsManager.setTemplate(template_data);
+    post_template = template_data;
 });
 
-// wait for popup action to fire, get action type and postId and load post and comments from Api or cache!
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    
-    if (request.action === 'popup-load-post'){
+// wait for popup action to fire, get action type and postId and load post and comments from Api server or local cache!
+ChromeExtension.onMessage((action, data) => {
+    if (action === 'popup-load-post'){
         // prepare page to receive data
-        tabsManager.preparePage();
+        ChromeExtension.tellTab('bg-prepare-page', {post_template});
         
-        // load post information by request.data.postId
-        apiLoader.loadUrl(`posts/${request.data.postId}`, post => {
+        // load post information by data.postId
+        apiLoader.loadUrl(`posts/${data.postId}`, post => {
             // given the post data, show the post inside the current page, while below we load our comments too.
-            tabsManager.renderPage({post});
+            ChromeExtension.tellTab('bg-render-page', {post});
 
             // load post comments and show them in the page
             apiLoader.loadUrl(`comments?postId=${post.id}`, comments => {
                 // add comments to page                    
-                tabsManager.renderPage({post, comments});
+                ChromeExtension.tellTab('bg-render-page', {post, comments});
             });
         });
     }

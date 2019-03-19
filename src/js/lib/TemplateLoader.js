@@ -3,6 +3,8 @@
  * @description Loads the html template where we will inject the api data.
  */
 
+ import ChromeExtension from './ChromeExtension.js';
+
  class TemplateLoader{
 
    constructor(){
@@ -16,7 +18,7 @@
       }
       // if this is a new template path, fetch it and cache it.
       else{
-         fetch(chrome.runtime.getURL(path))
+         fetch(ChromeExtension.url(path))
             .then((response) => response.text())
             .then(data => {
                this.template_data = data;

@@ -3,12 +3,34 @@
  * @description Manages the current page, processes and injects the computed template. Requires Mustache.js
  */
 
+import ChromeExtension from './ChromeExtension.js';
+
 class PageManager{
 
     constructor(){
         // html template that will be sent from the background script 
         // (which has loaded it once only and cached for anytime use)
         this.post_template = '';
+
+        this.waitForActions();
+    }
+
+    waitForActions(){
+        ChromeExtension.onMessage((action, data) => {
+            // wait for background actions to fire, get action with data to load post and comments inside our page.
+            switch (action){
+                case 'bg-prepare-page':
+                    // remove everything from the current page and load template
+                    this.reset(data.post_template);
+                break;
+                case 'bg-render-page': 
+                    // render data sent from background
+                    this.render(data);            
+                break;
+                default:
+                    // nothing
+            }
+        })
     }
 
     // this method uses the Mustache template engine, which takes the html 
@@ -17,7 +39,7 @@ class PageManager{
         const computed_post = Mustache.render(this.post_template, data);
 
         // remove all in the head because we want clear style and add our bootstrap css (do it only once for faster rendering)
-        const bootstrap_css = '<link rel="stylesheet" href="'+ chrome.runtime.getURL('node_modules/bootstrap/dist/css/bootstrap.css')+'">';
+        const bootstrap_css = '<link rel="stylesheet" href="'+ ChromeExtension.url('node_modules/bootstrap/dist/css/bootstrap.css')+'">';
         if(document.head.innerHTML !== bootstrap_css)
             document.head.innerHTML = bootstrap_css;
 
