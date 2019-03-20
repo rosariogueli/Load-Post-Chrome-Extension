@@ -55,10 +55,14 @@
                 success(this.localPosts[path]);
             }
         }
+
+        return this;
     }
 
     onError(onErrorCallback = (errorMsg) => {}){
         this.onErrorCallback = onErrorCallback;
+
+        return this;
     }
  }
 
