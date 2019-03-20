@@ -6,7 +6,7 @@
   "scripts": {
     "info": "echo 'Chrome Extension developed by Rosario Gueli.'",
     "lint": "echo '=> linting' && jshint src/js/*.js",
-    "test": "mocha --require isomorphic-fetch --require babel-core/register ./test/**/*Test.js || true",
+    "test": "mocha --timeout=5000 --require isomorphic-fetch --require babel-core/register ./test/**/*Test.js || true",
     "pretest": "npm run lint -s"
   },
   "author": "Rosario Gueli <rosariogueli@hotmail.it>",
