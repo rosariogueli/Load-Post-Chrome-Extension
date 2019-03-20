@@ -26,4 +26,13 @@ describe('ApiLoader', () => {
         });
     });
 
+    describe('apiLoader.loadUrl(`posts/101`)', () => {
+        it('trying the wrong id should return an error message', () => {
+            return apiLoader.loadUrl(`posts/101`)
+                            .onError((errorMsg) => {
+                                assert.isString(errorMsg);
+                            });
+        });
+    });
+    
  });
