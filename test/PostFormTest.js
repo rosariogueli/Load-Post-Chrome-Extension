@@ -26,43 +26,34 @@ const localServer = connect().use(serveStatic(__dirname+'/../')).listen(8090, ()
 
         describe(`Opening ${url} in a headless browser, enter test Post ID ${testPostID} and submit the form`, () => {
             
-            it('should return the test Post ID ${testPostID} via onSubmit callback', () => {
+            it('should return the test Post ID ${testPostID} via onSubmit callback', async () => {
 
-                const resultPostId = async () => {
-                    
-                    // create a headless browser using puppeteer and open the popup page
-                    const browser = await puppeteer.launch({headless: true});
-                    const page = await browser.newPage();
-                    // networkidle0 waits for the network to be idle (no requests for 500ms).
-                    await page.goto(url, {waitUntil: 'networkidle0'});
+                // create a headless browser using puppeteer and open the popup page
+                const browser = await puppeteer.launch({headless: true});
+                const page = await browser.newPage();
+                // networkidle0 waits for the network to be idle (no requests for 500ms).
+                await page.goto(url, {waitUntil: 'networkidle0'});
 
-                    // wait for the form to render and programmatically enter the Post ID 
-                    await page.waitForSelector('#post-form');
-                    await page.type('#post-form input[type="number"]', testPostID);
+                // wait for the form to render and programmatically enter the Post ID 
+                await page.waitForSelector('#post-form');
+                await page.type('#post-form input[type="number"]', testPostID);
 
-                    // override the onSubmit callback with our test callback to grab the postId
-                    const postId = await page.evaluate(() => {
-                        return new Promise(resolve => {
-                            postForm.onSubmit(postId => {
-                                resolve(postId);
-                            });
-                            // click the submit button to fire the onSubmit callback
-                            document.querySelector('#post-form button.btn-success').click();
+                // override the onSubmit callback with our test callback to grab the postId
+                const postId = await page.evaluate(() => {
+                    return new Promise(resolve => {
+                        postForm.onSubmit(postId => {
+                            resolve(postId);
                         });
+                        // click the submit button to fire the onSubmit callback
+                        document.querySelector('#post-form button.btn-success').click();
                     });
-
-                    // quit headless browser and close server.
-                    await browser.close();
-                    localServer.close();
-                    
-                    return postId;
-                }
-
-                // check that the test returned the postId correctly, if so the PostForm instance and all its internal methods have worked succesfully.
-                return resultPostId().then(postId => {
-                    expect(postId).to.equal(testPostID);
                 });
 
+                // quit headless browser and close server.
+                await browser.close();
+                localServer.close();
+                
+                expect(postId).to.equal(testPostID);
             });
         });
     }); 
