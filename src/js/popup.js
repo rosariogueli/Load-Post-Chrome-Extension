@@ -14,3 +14,6 @@ const postForm = new PostForm('#post-form');
 
 // wait for a submit action
 postForm.onSubmit(postId => ChromeExtension.tellApp('popup-load-post', {postId}) );
+
+// useful for testing in puppeteer
+window.postForm = postForm;

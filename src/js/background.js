@@ -18,7 +18,7 @@ apiLoader.onError(error => ChromeExtension.tellTab('bg-render-page', {error}) );
 // Load the template for our posts:
 // html template file can be loaded here because we've allowed it in the manifest file's web_accessible_resources.
 let post_template = '';
-templateLoader.load('src/html/post-template.html', template_data => {
+templateLoader.load(ChromeExtension.url('src/html/post-template.html'), template_data => {
     post_template = template_data;
 });
 
